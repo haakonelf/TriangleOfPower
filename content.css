@@ -1,0 +1,88 @@
+/* ===== Inline symbols (simple expressions) =====
+   Drawn as SVG masks so circle size/position don't depend on fonts. */
+.tp-wrap { --tp-size: 1.05em; }
+
+.tp-sym {
+  display: inline-block;
+  height: var(--tp-size);
+  vertical-align: -0.15em;
+  margin: 0 0.2em;
+  background-color: currentColor;
+  overflow: hidden;
+  white-space: nowrap;
+  text-indent: -999em;          /* hides fallback text; copy/paste gives the Unicode symbol */
+  -webkit-mask-repeat: no-repeat;  mask-repeat: no-repeat;
+  -webkit-mask-position: center;   mask-position: center;
+  -webkit-mask-size: contain;      mask-size: contain;
+}
+.tp-sym.tp-log {
+  width: var(--tp-size);
+  margin: 0 0.1em;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='4.2' r='3.2'/%3E%3Cpath d='M12 9.5 L3 22 H21 Z'/%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='4.2' r='3.2'/%3E%3Cpath d='M12 9.5 L3 22 H21 Z'/%3E%3C/svg%3E");
+}
+.tp-sym.tp-root {
+  width: calc(var(--tp-size) * 1.25);
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 24' fill='none' stroke='black' stroke-width='1.8' stroke-linejoin='round'%3E%3Ccircle cx='5.8' cy='19.2' r='3.2'/%3E%3Cpath d='M18 6 L9 22 H27 Z'/%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 24' fill='none' stroke='black' stroke-width='1.8' stroke-linejoin='round'%3E%3Ccircle cx='5.8' cy='19.2' r='3.2'/%3E%3Cpath d='M18 6 L9 22 H27 Z'/%3E%3C/svg%3E");
+}
+.tp-sym.tp-power {
+  width: calc(var(--tp-size) * 1.25);
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 24' fill='none' stroke='black' stroke-width='1.8' stroke-linejoin='round'%3E%3Ccircle cx='24.2' cy='19.2' r='3.2'/%3E%3Cpath d='M12 6 L3 22 H21 Z'/%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 24' fill='none' stroke='black' stroke-width='1.8' stroke-linejoin='round'%3E%3Ccircle cx='24.2' cy='19.2' r='3.2'/%3E%3Cpath d='M12 6 L3 22 H21 Z'/%3E%3C/svg%3E");
+}
+
+.tp-uni { margin: 0 0.25em; }
+.tp-uni.tp-log { margin: 0; }
+
+/* ===== Nested drawings =====
+   A big triangle with three slots (top / bottom-left / bottom-right).
+   The slot that holds the RESULT is left blank:
+     log   : left = base,  right = argument, top   = (result)
+     root  : top  = index, right = radicand, left  = (result)
+     power : left = base,  top   = exponent, right = (result)
+   A nested expression is drawn as a smaller triangle hanging off that slot's
+   corner (smaller and lower than the main one).
+
+   Tweak here:
+     child size ........ "0.5em" in content.js (drawBox)
+     child drop ........ bottom: -0.45em on .tp-boxslot.tp-left/.tp-right
+     child label size .. font-size: 1.5em on ".tp-box .tp-box .tp-textslot"
+*/
+.tp-box {
+  position: relative;
+  display: inline-block;
+  width: 2.4em;
+  height: 2.1em;
+  margin: 1.3em 1.9em 1.5em 1.9em;   /* extra room below so bottom labels are never clipped */
+  vertical-align: -1.25em;
+  line-height: 1;
+  white-space: nowrap;
+  text-indent: 0;
+}
+.tp-box.tp-hl { margin-left: 2.4em; }
+.tp-box.tp-hr { margin-right: 2.4em; }
+.tp-box .tp-box { margin: 0; vertical-align: baseline; }
+
+.tp-tri {
+  position: absolute;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  overflow: visible;
+}
+
+.tp-slot { position: absolute; }
+
+.tp-slot.tp-top { left: 50%; bottom: 100%; transform: translateX(-50%); margin-bottom: 0.1em; }
+.tp-slot.tp-top.tp-boxslot { margin-bottom: -0.14em; }   /* touches the apex */
+
+.tp-textslot.tp-left  { right: 100%; bottom: -0.4em; margin-right: 0.1em; }
+.tp-textslot.tp-right { left: 100%;  bottom: -0.4em; margin-left: 0.1em; }
+
+.tp-boxslot.tp-left  { right: 100%; bottom: -0.45em; margin-right: -0.15em; }
+.tp-boxslot.tp-right { left: 100%;  bottom: -0.45em; margin-left: -0.15em; }
+.tp-boxslot > .tp-box { display: block; }
+
+/* labels of the small triangles: geometry is small, text stays readable */
+.tp-box .tp-box .tp-textslot { font-size: 1.5em; }
+.tp-box .tp-box .tp-textslot.tp-top { margin-bottom: 0.05em; }

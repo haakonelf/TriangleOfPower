@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Triangle of Power Notation</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 680px; margin: 2rem auto; padding: 0 1rem; line-height: 1.5; }
+    fieldset { margin: 1rem 0; padding: .8rem 1rem; }
+    label { display: block; margin: .35rem 0; }
+    select { padding: .25rem; }
+    button { padding: .4rem .9rem; margin-right: .5rem; }
+    #status { color: green; }
+    .err { color: crimson !important; }
+    code { background: #8882; padding: 0 .25em; border-radius: 3px; }
+  </style>
+</head>
+<body>
+  <h1>Triangle of Power Notation</h1>
+
+  <fieldset>
+    <legend>What to convert</legend>
+    <label><input type="checkbox" id="en-log"> <code>log_a(b)</code>, <code>log5(625)</code>, <code>log₂(8)</code>, <code>log_2 x</code>, <code>log5 625</code></label>
+    <label><input type="checkbox" id="en-ln"> <code>ln(x)</code>, <code>ln7/ln2</code>, <code>ln a + ln b</code> (base e)</label>
+    <label><input type="checkbox" id="en-sqrt"> <code>sqrt(x)</code>, <code>sqrt x</code>, <code>√2</code>, <code>∛x</code> (index 2, 3, 4)</label>
+    <label><input type="checkbox" id="en-root"> <code>x^(1/n)</code> as root</label>
+    <label><input type="checkbox" id="en-power"> <code>a^b</code> and <code>a**b</code> as power</label>
+    <label>Plain <code>log(x)</code> means:
+      <select id="plainLog">
+        <option value="none">leave it alone</option>
+        <option value="10">base 10</option>
+        <option value="e">base e</option>
+      </select>
+    </label>
+  </fieldset>
+
+  <fieldset>
+    <legend>Appearance</legend>
+    <label>Simple expressions:
+      <select id="style">
+        <option value="graphic">Large circles (drawn with SVG)</option>
+        <option value="unicode">Plain Unicode (⧊ ₒ△ △ₒ)</option>
+      </select>
+    </label>
+    <label>Nested expressions, e.g. <code>log_x(x^(y))</code>:
+      <select id="nested">
+        <option value="drawing">Nested triangle drawings</option>
+        <option value="inline">Inline symbols</option>
+      </select>
+    </label>
+  </fieldset>
+
+  <p>
+    <button id="save">Save</button>
+    <button id="reset">Reset to defaults</button>
+    <span id="status"></span>
+  </p>
+  <p>Reload open tabs to see changes on text that was already converted.</p>
+  <script src="options.js"></script>
+</body>
+</html>

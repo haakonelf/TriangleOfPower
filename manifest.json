@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "Triangle of Power Notation",
+  "version": "3.3",
+  "description": "Rewrites log, root and power expressions on web pages as triangle-of-power notation, with nested drawings.",
+  "permissions": ["storage"],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ],
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "triangle-of-power@example.local",
+      "strict_min_version": "115.0"
+    }
+  }
+}
